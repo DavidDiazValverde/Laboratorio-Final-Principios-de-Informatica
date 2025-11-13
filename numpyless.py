@@ -234,7 +234,8 @@ def dot(v: Vector, w: Vector) -> float:
     raise NotImplementedError("Función no implementada.")
 
 
-def add(v: Vector, w: Vector) -> Vector:
+def suma_vectores(v: Vector, w: Vector) -> Vector:
+    
     """Suma dos vectores elemento a elemento.
 
     Equivalente en NumPy: v + w
