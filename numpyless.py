@@ -213,7 +213,7 @@ def dot(v: Vector, w: Vector) -> float:
         verificacion_v = isinstance(v,list)
         verificacion_w = isinstance(w,list)
         if not verificacion_v or not verificacion_w:
-            raise ValueError ("los datos entregados no son vectores")
+            raise TypeError ("los datos entregados no son vectores")
         
         resultado = 0
         if len(v) != len(w):
@@ -221,8 +221,10 @@ def dot(v: Vector, w: Vector) -> float:
         for i in range (len(v)):
             resultado += v[i]*w[i]
         return resultado 
-    except ValueError as e:
-        print(f"Error!!!! {e}")
+    except ValueError:
+        raise ValueError
+    except TypeError:
+        raise TypeError
 
     """Calcula el producto punto (producto escalar) de dos vectores.
 
