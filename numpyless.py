@@ -137,16 +137,6 @@ def identity(n: int) -> Matriz:
 
 
 def shape(A: Matriz) -> tuple[int, int]:
-    try:
-        verificacion = isinstance(A, list)
-        if not verificacion:
-            raise ValueError("No se ingresó una matriz")
-        filas = len(A)
-        columnas = len(A[0])
-        return filas, columnas
-    except ValueError as e:
-        print(f"Error {e}")
-
     """Devuelve las dimensiones de una matriz como (filas, columnas).
 
     Equivalente en NumPy: A.shape
@@ -163,24 +153,18 @@ def shape(A: Matriz) -> tuple[int, int]:
 
     Pista: len(A) da filas, len(A[0]) da columnas
     """
-
-
-def transpose(A: Matriz) -> Matriz:
     try:
         verificacion = isinstance(A, list)
         if not verificacion:
             raise ValueError("No se ingresó una matriz")
         filas = len(A)
         columnas = len(A[0])
-        transpuesta = [[0 for _ in range(filas)] for _ in range(columnas)]
-
-        for fila in range(filas):
-            for columna in range(columnas):
-                transpuesta[columna][fila] = A[fila][columna]
-        return transpuesta
+        return filas, columnas
     except ValueError as e:
         print(f"Error {e}")
 
+
+def transpose(A: Matriz) -> Matriz:
     """Devuelve la transpuesta de una matriz A.
 
     La transpuesta intercambia filas por columnas: A_t[j][i] = A[i][j].
@@ -199,6 +183,20 @@ def transpose(A: Matriz) -> Matriz:
 
     Pista: Usa zip(*A) o listas por comprensión
     """
+    try:
+        verificacion = isinstance(A, list)
+        if not verificacion:
+            raise ValueError("No se ingresó una matriz")
+        filas = len(A)
+        columnas = len(A[0])
+        transpuesta = [[0 for _ in range(filas)] for _ in range(columnas)]
+
+        for fila in range(filas):
+            for columna in range(columnas):
+                transpuesta[columna][fila] = A[fila][columna]
+        return transpuesta
+    except ValueError as e:
+        print(f"Error {e}")
 
 
 # -------------------------------------------------------------------
@@ -207,23 +205,6 @@ def transpose(A: Matriz) -> Matriz:
 
 
 def dot(v: Vector, w: Vector) -> float:
-    try:
-        verificacion_v = isinstance(v, list)
-        verificacion_w = isinstance(w, list)
-        if not verificacion_v or not verificacion_w:
-            raise TypeError("los datos entregados no son vectores")
-
-        resultado = 0
-        if len(v) != len(w):
-            raise ValueError("los vectores no tienen la misma longitud")
-        for i in range(len(v)):
-            resultado += v[i] * w[i]
-        return resultado
-    except ValueError:
-        raise ValueError
-    except TypeError:
-        raise TypeError
-
     """Calcula el producto punto (producto escalar) de dos vectores.
 
     Fórmula: v · w = v[0]*w[0] + v[1]*w[1] + ... + v[n]*w[n]
@@ -246,6 +227,22 @@ def dot(v: Vector, w: Vector) -> float:
 
     Pista: Usa sum() y zip()
     """
+    try:
+        verificacion_v = isinstance(v, list)
+        verificacion_w = isinstance(w, list)
+        if not verificacion_v or not verificacion_w:
+            raise TypeError("los datos entregados no son vectores")
+
+        resultado = 0
+        if len(v) != len(w):
+            raise ValueError("los vectores no tienen la misma longitud")
+        for i in range(len(v)):
+            resultado += v[i] * w[i]
+        return resultado
+    except ValueError:
+        raise ValueError
+    except TypeError:
+        raise TypeError
 
 
 def add(v: Vector, w: Vector) -> Vector:
@@ -276,7 +273,6 @@ def add(v: Vector, w: Vector) -> Vector:
         resultado.append(v[i] + w[i])
 
     return resultado
-
 
 
 def multiply(c: float, v: Vector) -> Vector:
