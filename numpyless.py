@@ -209,6 +209,21 @@ def transpose(A: Matriz) -> Matriz:
 
 
 def dot(v: Vector, w: Vector) -> float:
+    try:
+        verificacion_v = isinstance(v,list)
+        verificacion_w = isinstance(w,list)
+        if not verificacion_v or not verificacion_w:
+            raise ValueError ("los datos entregados no son vectores")
+        
+        resultado = 0
+        if len(v) != len(w):
+            raise ValueError("los vectores no tienen la misma longitud")
+        for i in range (len(v)):
+            resultado += v[i]*w[i]
+        return resultado 
+    except ValueError as e:
+        print(f"Error!!!! as {e}")
+
     """Calcula el producto punto (producto escalar) de dos vectores.
 
     Fórmula: v · w = v[0]*w[0] + v[1]*w[1] + ... + v[n]*w[n]
@@ -234,7 +249,7 @@ def dot(v: Vector, w: Vector) -> float:
     raise NotImplementedError("Función no implementada.")
 
 
-def add(v: Vector, w: Vector) -> Vector:
+def add(v: Vector, w: Vector) -> Vector:    
     """Suma dos vectores elemento a elemento.
 
     Equivalente en NumPy: v + w
