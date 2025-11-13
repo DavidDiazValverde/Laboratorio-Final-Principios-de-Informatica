@@ -234,8 +234,16 @@ def dot(v: Vector, w: Vector) -> float:
     raise NotImplementedError("Función no implementada.")
 
 
-def suma_vectores(v: Vector, w: Vector) -> Vector:
-    
+def add(v: Vector, w: Vector) -> Vector:
+    if len(v) != len(w):
+        raise ValueError("Los vectores deben tener la misma logitud")
+    resultado=[]
+    for i in range(len(v)):
+        resultado.append(v[i]+w[i])
+
+    return resultado
+
+
     """Suma dos vectores elemento a elemento.
 
     Equivalente en NumPy: v + w
