@@ -222,7 +222,7 @@ def dot(v: Vector, w: Vector) -> float:
             resultado += v[i]*w[i]
         return resultado 
     except ValueError as e:
-        print(f"Error!!!! as {e}")
+        print(f"Error!!!! {e}")
 
     """Calcula el producto punto (producto escalar) de dos vectores.
 
@@ -246,7 +246,7 @@ def dot(v: Vector, w: Vector) -> float:
 
     Pista: Usa sum() y zip()
     """
-    raise NotImplementedError("Función no implementada.")
+
 
 
 def add(v: Vector, w: Vector) -> Vector:    
