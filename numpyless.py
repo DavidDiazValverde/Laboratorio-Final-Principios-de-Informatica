@@ -32,8 +32,8 @@ Matriz = list[list[float]]
 def zeros(shape: tuple[int, int]) -> Matriz:
     try:
         filas, columnas = shape
-        if (filas % 1 != 0) or (columnas % 1 != 0 ):
-            raise  ValueError ("Los valores ingresados no son números enteros")
+        if (filas % 1 != 0) or (columnas % 1 != 0):
+            raise ValueError("Los valores ingresados no son números enteros")
         matriz = []
         for fila in range(filas):
             mini_matriz = []
@@ -64,8 +64,8 @@ def zeros(shape: tuple[int, int]) -> Matriz:
 def ones(shape: tuple[int, int]) -> Matriz:
     try:
         filas, columnas = shape
-        if (filas % 1 != 0) or (columnas % 1 != 0 ):
-            raise  ValueError ("Los valores ingresados no son números enteros")
+        if (filas % 1 != 0) or (columnas % 1 != 0):
+            raise ValueError("Los valores ingresados no son números enteros")
         matriz = []
         for fila in range(filas):
             mini_matriz = []
@@ -75,7 +75,6 @@ def ones(shape: tuple[int, int]) -> Matriz:
         return matriz
     except ValueError as e:
         print(f"!Error {e}")
-    
 
     """Crea una matriz rellena de unos.
 
@@ -98,11 +97,11 @@ def ones(shape: tuple[int, int]) -> Matriz:
 def identity(n: int) -> Matriz:
     try:
         if n % 1 != 0:
-            raise ValueError ("Ingrese un número entero")
+            raise ValueError("Ingrese un número entero")
         matriz = []
         for fila in range(n):
             mini_matriz = []
-            for columna in range (n):
+            for columna in range(n):
                 if columna == fila:
                     mini_matriz.append(1.0)
                 else:
@@ -139,12 +138,12 @@ def identity(n: int) -> Matriz:
 
 def shape(A: Matriz) -> tuple[int, int]:
     try:
-        verificacion = isinstance(A,list)
+        verificacion = isinstance(A, list)
         if not verificacion:
-            raise ValueError ("No se ingresó una matriz")
+            raise ValueError("No se ingresó una matriz")
         filas = len(A)
         columnas = len(A[0])
-        return filas,columnas
+        return filas, columnas
     except ValueError as e:
         print(f"Error {e}")
 
@@ -166,23 +165,22 @@ def shape(A: Matriz) -> tuple[int, int]:
     """
 
 
-
 def transpose(A: Matriz) -> Matriz:
     try:
-        verificacion = isinstance(A,list)
+        verificacion = isinstance(A, list)
         if not verificacion:
-            raise ValueError ("No se ingresó una matriz")
-        filas = len (A)
+            raise ValueError("No se ingresó una matriz")
+        filas = len(A)
         columnas = len(A[0])
-        transpuesta = [[0 for _ in range(filas)]for _ in range(columnas)]
+        transpuesta = [[0 for _ in range(filas)] for _ in range(columnas)]
 
         for fila in range(filas):
             for columna in range(columnas):
-                transpuesta[columna][fila]=A[fila][columna]
+                transpuesta[columna][fila] = A[fila][columna]
         return transpuesta
     except ValueError as e:
         print(f"Error {e}")
-    
+
     """Devuelve la transpuesta de una matriz A.
 
     La transpuesta intercambia filas por columnas: A_t[j][i] = A[i][j].
@@ -209,6 +207,23 @@ def transpose(A: Matriz) -> Matriz:
 
 
 def dot(v: Vector, w: Vector) -> float:
+    try:
+        verificacion_v = isinstance(v, list)
+        verificacion_w = isinstance(w, list)
+        if not verificacion_v or not verificacion_w:
+            raise TypeError("los datos entregados no son vectores")
+
+        resultado = 0
+        if len(v) != len(w):
+            raise ValueError("los vectores no tienen la misma longitud")
+        for i in range(len(v)):
+            resultado += v[i] * w[i]
+        return resultado
+    except ValueError:
+        raise ValueError
+    except TypeError:
+        raise TypeError
+
     """Calcula el producto punto (producto escalar) de dos vectores.
 
     Fórmula: v · w = v[0]*w[0] + v[1]*w[1] + ... + v[n]*w[n]
@@ -231,19 +246,9 @@ def dot(v: Vector, w: Vector) -> float:
 
     Pista: Usa sum() y zip()
     """
-    raise NotImplementedError("Función no implementada.")
 
 
 def add(v: Vector, w: Vector) -> Vector:
-    if len(v) != len(w):
-        raise ValueError("Los vectores deben tener la misma logitud")
-    resultado=[]
-    for i in range(len(v)):
-        resultado.append(v[i]+w[i])
-
-    return resultado
-
-
     """Suma dos vectores elemento a elemento.
 
     Equivalente en NumPy: v + w
@@ -264,7 +269,14 @@ def add(v: Vector, w: Vector) -> Vector:
 
     Pista: Usa listas por comprensión con zip()
     """
-    raise NotImplementedError("Función no implementada.")
+    if len(v) != len(w):
+        raise ValueError("Los vectores deben tener la misma logitud")
+    resultado = []
+    for i in range(len(v)):
+        resultado.append(v[i] + w[i])
+
+    return resultado
+
 
 
 def multiply(c: float, v: Vector) -> Vector:
