@@ -111,7 +111,7 @@ def identity(n: int) -> Matriz:
         return matriz
     except ValueError as e:
         print(f"Error!! {e}")
-        
+
     """Crea una matriz identidad cuadrada.
 
     Equivalente en NumPy: np.identity(n)
@@ -138,9 +138,16 @@ def identity(n: int) -> Matriz:
 
 
 def shape(A: Matriz) -> tuple[int, int]:
-    filas = len(A)
-    columnas = len(A[0])
-    return filas,columnas
+    try:
+        verificacion = isinstance(A,list)
+        if not verificacion:
+            raise ValueError ("No se ingresó una matriz")
+        filas = len(A)
+        columnas = len(A[0])
+        return filas,columnas
+    except ValueError as e:
+        print(f"Error {e}")
+
     """Devuelve las dimensiones de una matriz como (filas, columnas).
 
     Equivalente en NumPy: A.shape
@@ -157,19 +164,25 @@ def shape(A: Matriz) -> tuple[int, int]:
 
     Pista: len(A) da filas, len(A[0]) da columnas
     """
-    raise NotImplementedError("Función no implementada.")
+
 
 
 def transpose(A: Matriz) -> Matriz:
-    filas = len (A)
-    columnas = len(A[0])
-    transpuesta = [[0 for _ in range(filas)]for _ in range(columnas)]
+    try:
+        verificacion = isinstance(A,list)
+        if not verificacion:
+            raise ValueError ("No se ingresó una matriz")
+        filas = len (A)
+        columnas = len(A[0])
+        transpuesta = [[0 for _ in range(filas)]for _ in range(columnas)]
 
-    for fila in range(filas):
-       for columna in range(columnas):
-           transpuesta[columna][fila]=A[fila][columna]
-           
-    return transpuesta
+        for fila in range(filas):
+            for columna in range(columnas):
+                transpuesta[columna][fila]=A[fila][columna]
+        return transpuesta
+    except ValueError as e:
+        print(f"Error {e}")
+    
     """Devuelve la transpuesta de una matriz A.
 
     La transpuesta intercambia filas por columnas: A_t[j][i] = A[i][j].
@@ -188,7 +201,6 @@ def transpose(A: Matriz) -> Matriz:
 
     Pista: Usa zip(*A) o listas por comprensión
     """
-    raise NotImplementedError("Función no implementada.")
 
 
 # -------------------------------------------------------------------
