@@ -362,7 +362,28 @@ def add_matrices(A: Matriz, B: Matriz) -> Matriz:
 
     Pista: Suma elemento a elemento, fila por fila
     """
-    raise NotImplementedError("Función no implementada.")
+    verificacion_A = isinstance(A,list)
+    verificacion_B = isinstance(B,list)
+    if not verificacion_A or not verificacion_B:
+        raise TypeError
+    fila_A = len(A)
+    columna_A = len(A[0])
+    fila_B = len(B)
+    columna_B = len(B[0])
+    verificacion_filas = (fila_A == fila_B)
+    verificacion_columnas = (columna_A== columna_B)
+    if not verificacion_filas or not verificacion_columnas:
+        raise ValueError
+    
+    #ahora calculamos la suma de matrices, una vez nos aseguramos que no haya errores
+
+    resultado=[[0 for _ in range(fila_A)]for _ in range(columna_A)]
+    for i in range(fila_A):
+        for j in range(columna_A):
+            suma = A[i][j] + B[i][j]
+            resultado[i][j]= suma
+    return resultado
+
 
 
 def multiply_matrix(c: float, A: Matriz) -> Matriz:
