@@ -266,13 +266,16 @@ def add(v: Vector, w: Vector) -> Vector:
 
     Pista: Usa listas por comprensión con zip()
     """
-    if len(v) != len(w):
-        raise ValueError("Los vectores deben tener la misma logitud")
-    resultado = []
-    for i in range(len(v)):
-        resultado.append(v[i] + w[i])
+    try:
+        if len(v) != len(w):
+            raise ValueError("Los vectores deben tener la misma logitud")
+        resultado = []
+        for i in range(len(v)):
+            resultado.append(v[i] + w[i])
 
-    return resultado
+        return resultado
+    except ValueError as e:
+        print(f"Error!!! {e}")
 
 
 def multiply(c: float, v: Vector) -> Vector:
