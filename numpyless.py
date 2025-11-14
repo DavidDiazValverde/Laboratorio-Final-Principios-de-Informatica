@@ -333,7 +333,7 @@ def norm(v: Vector) -> float:
     if not verificar_v:
         raise TypeError
     resultado = dot(v,v)
-    return sqrt(resultado)
+    return (resultado)**(1/2)
 
 
 # -------------------------------------------------------------------
