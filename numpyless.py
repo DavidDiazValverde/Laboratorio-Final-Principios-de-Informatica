@@ -266,16 +266,14 @@ def add(v: Vector, w: Vector) -> Vector:
 
     Pista: Usa listas por comprensión con zip()
     """
-    try:
-        if len(v) != len(w):
-            raise ValueError("Los vectores deben tener la misma logitud")
-        resultado = []
-        for i in range(len(v)):
-            resultado.append(v[i] + w[i])
 
-        return resultado
-    except ValueError:
-        raise ValueError
+    if len(v) != len(w):
+         raise ValueError("Los vectores deben tener la misma logitud")
+    resultado = []
+    for i in range(len(v)):
+        resultado.append(v[i] + w[i])
+
+    return resultado
         
 
 
@@ -331,7 +329,11 @@ def norm(v: Vector) -> float:
 
     Pista: Usa dot(v, v) y luego sqrt() del módulo math
     """
-    raise NotImplementedError("Función no implementada.")
+    verificar_v = isinstance(v,list)
+    if not verificar_v:
+        raise TypeError
+    resultado = dot(v,v)
+    return sqrt(resultado)
 
 
 # -------------------------------------------------------------------
