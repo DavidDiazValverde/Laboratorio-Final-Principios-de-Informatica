@@ -297,7 +297,19 @@ def multiply(c: float, v: Vector) -> Vector:
 
     Pista: Multiplica c por cada elemento
     """
-    raise NotImplementedError("Función no implementada.")
+
+    verificacion_v = isinstance(v,list)
+    if not verificacion_v:
+         raise TypeError
+    
+    vector_resultante = []
+
+    for valor in v:
+        resultado = c*valor
+        vector_resultante.append(resultado)
+    return vector_resultante
+        
+        
 
 
 def norm(v: Vector) -> float:
