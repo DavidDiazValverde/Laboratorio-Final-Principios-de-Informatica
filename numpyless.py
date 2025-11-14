@@ -274,8 +274,9 @@ def add(v: Vector, w: Vector) -> Vector:
             resultado.append(v[i] + w[i])
 
         return resultado
-    except ValueError as e:
-        print(f"Error!!! {e}")
+    except ValueError:
+        raise ValueError
+        
 
 
 def multiply(c: float, v: Vector) -> Vector:
