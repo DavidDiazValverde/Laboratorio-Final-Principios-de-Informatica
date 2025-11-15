@@ -451,8 +451,27 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
     Pista: Para matrices, cada elemento resultado[i][j] es el
            producto punto de la fila i de A con la columna j de B
     """
-    raise NotImplementedError("Función no implementada.")
+    verificacion_A = isinstance(A,list)
+    verificacion_B = isinstance(B,list)
+    if not verificacion_A or not verificacion_B:
+        raise TypeError
+    if all(isinstance(x, (int, float)) for x in B):
+        B = [[x] for x in B] 
 
+    fila_A = len(A)
+    columna_A = len(A[0])
+    fila_B = len(B)
+    columna_B = len(B[0])
+    if columna_A != fila_B:
+        raise ValueError
+    
+    resultado = [[0 for _ in range(columna_B)] for _ in range(fila_A)]
+
+    for i in range(fila_A):
+        for j in range(columna_B):
+            for k in range(fila_B):
+                resultado [i][j] += A[i][k] * B[k][j]
+    return resultado
 
 # -------------------------------------------------------------------
 # Sección 5: Álgebra Lineal (⭐⭐⭐ Avanzado - Opcional/Extra)
