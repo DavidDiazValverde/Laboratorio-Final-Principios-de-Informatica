@@ -465,7 +465,7 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
     if columna_A != fila_B:
         raise ValueError
     
-    resultado = [[0 for _ in range(columna_B)] for _ in range(fila_A)]
+    resultado = [[0 for _ in range(fila_A)] for _ in range(columna_B)]
 
     for i in range(fila_A):
         for j in range(columna_B):
