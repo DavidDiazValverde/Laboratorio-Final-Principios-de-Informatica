@@ -473,7 +473,7 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
 
     filas_B = len(B)
     columnas_B = len(B[0])
-    if filas_B != n:
+    if filas_B != columnas_A:
         raise ValueError
     resultado = [[0.0 for _ in range(columnas_B)] for _ in range(filas_A)]
     for i in range(filas_A):
