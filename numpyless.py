@@ -455,23 +455,35 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
     verificacion_B = isinstance(B,list)
     if not verificacion_A or not verificacion_B:
         raise TypeError
-    if all(isinstance(x, (int, float)) for x in B):
-        B = [[x] for x in B] 
-
-    fila_A = len(A)
-    columna_A = len(A[0])
-    fila_B = len(B)
-    columna_B = len(B[0])
-    if columna_A != fila_B:
-        raise ValueError
     
-    resultado = [[0 for _ in range(fila_A)] for _ in range(columna_B)]
+    filas_A = len(A)
+    columnas_A= len(A[0])
 
-    for i in range(fila_A):
-        for j in range(columna_B):
-            for k in range(fila_B):
-                resultado [i][j] += A[i][k] * B[k][j]
+    if all(isinstance(x, (int, float)) for x in B):
+        if len(B) != columnas_A:
+            raise ValueError
+        resultado = []
+        for i in range(filas_A):
+            suma = 0
+            for k in range(columnas_A):
+                suma += A[i][k] * B[k]
+            resultado.append(float(suma))
+        return resultado
+
+
+    filas_B = len(B)
+    columnas_B = len(B[0])
+    if filas_B != n:
+        raise ValueError
+    resultado = [[0.0 for _ in range(columnas_B)] for _ in range(filas_A)]
+    for i in range(filas_A):
+        for j in range(columnas_B):
+            suma = 0
+            for k in range(columnas_A):
+                suma += A[i][k] * B[k][j]
+            resultado[i][j] = float(suma)
     return resultado
+
 
 # -------------------------------------------------------------------
 # Sección 5: Álgebra Lineal (⭐⭐⭐ Avanzado - Opcional/Extra)
