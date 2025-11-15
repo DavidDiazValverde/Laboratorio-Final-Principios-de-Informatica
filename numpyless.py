@@ -411,7 +411,7 @@ def multiply_matrix(c: float, A: Matriz) -> Matriz:
     fila = len(A)
     columna = len(A[0])
 
-    resultado = [[0 for _ in fila] for _ in columna]
+    resultado = [[0 for _ in range(fila)] for _ in range(columna)]
 
     for i in range(fila):
         for j in range (columna):
