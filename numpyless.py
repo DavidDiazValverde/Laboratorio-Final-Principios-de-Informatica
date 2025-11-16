@@ -458,7 +458,8 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
         for i in range(filas_A):
             suma = 0
             for k in range(columnas_A):
-                resultado[i] += A[i][k] * B[k]
+                suma += A[i][k] * B[k]
+            resultado.append(float(suma))
         return resultado
     
     else:
