@@ -454,26 +454,15 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
     if all(isinstance(x, (int, float)) for x in B):
         if len(B) != columnas_A:
             raise ValueError
-        resultado = []
-        for i in range(filas_A):
-            suma = 0
-            for k in range(columnas_A):
-                suma += A[i][k] * B[k]
-            resultado.append(float(suma))
-        return resultado
+        return [dot(fila,B)for fila in A]
     
     else:
         filas_B,columnas_B = shape(B)
         if filas_B != columnas_A:
             raise ValueError
-        resultado = [[0.0 for _ in range(columnas_B)] for _ in range(filas_A)]
-        for i in range(filas_A):
-            for j in range(columnas_B):
-                suma = 0
-                for k in range(columnas_A):
-                    suma += A[i][k] * B[k][j]
-                resultado[i][j] = float(suma)
-        return resultado
+        B_T = transpose(B)
+        return [[float(dot(fila_A, columna_B)) for columna_B in B_T] for fila_A in A]
+
 
 
 # -------------------------------------------------------------------
