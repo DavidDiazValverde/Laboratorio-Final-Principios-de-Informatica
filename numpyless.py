@@ -227,22 +227,19 @@ def dot(v: Vector, w: Vector) -> float:
 
     Pista: Usa sum() y zip()
     """
-    try:
-        verificacion_v = isinstance(v, list)
-        verificacion_w = isinstance(w, list)
-        if not verificacion_v or not verificacion_w:
-            raise TypeError("los datos entregados no son vectores")
+    
+    verificacion_v = isinstance(v, list)
+    verificacion_w = isinstance(w, list)
+    if not verificacion_v or not verificacion_w:
+        raise TypeError("los datos entregados no son vectores")
 
-        resultado = 0
-        if len(v) != len(w):
-            raise ValueError("los vectores no tienen la misma longitud")
-        for i in range(len(v)):
-            resultado += v[i] * w[i]
-        return resultado
-    except ValueError:
-        raise ValueError
-    except TypeError:
-        raise TypeError
+    resultado = 0
+    if len(v) != len(w):
+        raise ValueError("los vectores no tienen la misma longitud")
+    for i in range(len(v)):
+        resultado += v[i] * w[i]
+    return resultado
+    
 
 
 def add(v: Vector, w: Vector) -> Vector:
@@ -366,12 +363,10 @@ def add_matrices(A: Matriz, B: Matriz) -> Matriz:
     verificacion_B = isinstance(B,list)
     if not verificacion_A or not verificacion_B:
         raise TypeError
-    fila_A = len(A)
-    columna_A = len(A[0])
-    fila_B = len(B)
-    columna_B = len(B[0])
+    fila_A, columna_A = shape(A)
+    fila_B,columna_B = shape(B)
     verificacion_filas = (fila_A == fila_B)
-    verificacion_columnas = (columna_A== columna_B)
+    verificacion_columnas = (columna_A == columna_B)
     if not verificacion_filas or not verificacion_columnas:
         raise ValueError
     
@@ -380,8 +375,7 @@ def add_matrices(A: Matriz, B: Matriz) -> Matriz:
     resultado=[[0 for _ in range(fila_A)]for _ in range(columna_A)]
     for i in range(fila_A):
         for j in range(columna_A):
-            suma = A[i][j] + B[i][j]
-            resultado[i][j]= suma
+            resultado[i][j]= A[i][j] + B[i][j]
     return resultado
 
 
@@ -408,8 +402,7 @@ def multiply_matrix(c: float, A: Matriz) -> Matriz:
     verificacion_c = isinstance(c,float) or isinstance(c,int)
     if not verificacion_A or not verificacion_c:
         raise TypeError
-    fila = len(A)
-    columna = len(A[0])
+    fila,columna = shape(A)
 
     resultado = [[0 for _ in range(fila)] for _ in range(columna)]
 
@@ -456,8 +449,7 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
     if not verificacion_A or not verificacion_B:
         raise TypeError
     
-    filas_A = len(A)
-    columnas_A= len(A[0])
+    filas_A,columnas_A= shape(A)
 
     if all(isinstance(x, (int, float)) for x in B):
         if len(B) != columnas_A:
@@ -466,23 +458,21 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
         for i in range(filas_A):
             suma = 0
             for k in range(columnas_A):
-                suma += A[i][k] * B[k]
-            resultado.append(float(suma))
+                resultado[i] += A[i][k] * B[k]
         return resultado
-
-
-    filas_B = len(B)
-    columnas_B = len(B[0])
-    if filas_B != columnas_A:
-        raise ValueError
-    resultado = [[0.0 for _ in range(columnas_B)] for _ in range(filas_A)]
-    for i in range(filas_A):
-        for j in range(columnas_B):
-            suma = 0
-            for k in range(columnas_A):
-                suma += A[i][k] * B[k][j]
-            resultado[i][j] = float(suma)
-    return resultado
+    
+    else:
+        filas_B,columnas_B = shape(B)
+        if filas_B != columnas_A:
+            raise ValueError
+        resultado = [[0.0 for _ in range(columnas_B)] for _ in range(filas_A)]
+        for i in range(filas_A):
+            for j in range(columnas_B):
+                suma = 0
+                for k in range(columnas_A):
+                    suma += A[i][k] * B[k][j]
+                resultado[i][j] = float(suma)
+        return resultado
 
 
 # -------------------------------------------------------------------
