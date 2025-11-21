@@ -103,17 +103,25 @@ def ones(shape: tuple[int, int]) -> Matriz:
 
 
 def identity(n: int) -> Matriz:
+    #nos aseguramos que n sea un entero y si no retornamos un ValueError
     if n % 1 != 0:
         raise ValueError("Ingrese un número entero")
+    #creamos la función matriz que guardará la matriz identidad que estamos creando
     matriz = []
+    #usamos un loop for con el rango de n para que sea una matriz nxn
     for fila in range(n):
+        #al igual que antes creamos una variable local y temporal llamada mini_matriz que guarda cada fila
         mini_matriz = []
+        #lo mismo de antes pero esta vez para las columnas
         for columna in range(n):
+            #usamos un condicional que agrega un 1 a mini_matriz si la columna== a fila, si no agrega un cero
             if columna == fila:
                 mini_matriz.append(1.0)
             else:
                 mini_matriz.append(0.0)
+        #de esta forma obtenemos una matriz identidad al agregar cada fila a la matriz
         matriz.append(mini_matriz)
+        #retornamos esa matriz
     return matriz
 
 
