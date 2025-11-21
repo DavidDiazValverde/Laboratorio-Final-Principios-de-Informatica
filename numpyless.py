@@ -68,16 +68,20 @@ def zeros(shape: tuple[int, int]) -> Matriz:
 
 
 def ones(shape: tuple[int, int]) -> Matriz:
-
+    # al igual que en la funcion ceros desempaquetamos shape en filas y columnas
     filas, columnas = shape
+    #nos aseguramos que cada variable tenga los datos que dice que nos proporciona
     if (filas % 1 != 0) or (columnas % 1 != 0):
         raise ValueError("Los valores ingresados no son números enteros")
+    #creamos la variable matriz que guardará nuestra matriz de unos
     matriz = []
+    #usamos el mismo ciclo utilizado en zeros, pero esta vez para unos
     for fila in range(filas):
         mini_matriz = []
         for columna in range(columnas):
             mini_matriz.append(1.0)
         matriz.append(mini_matriz)
+    #retornamos la matriz
     return matriz
   
     """Crea una matriz rellena de unos.
@@ -99,21 +103,19 @@ def ones(shape: tuple[int, int]) -> Matriz:
 
 
 def identity(n: int) -> Matriz:
-    try:
-        if n % 1 != 0:
-            raise ValueError("Ingrese un número entero")
-        matriz = []
-        for fila in range(n):
-            mini_matriz = []
-            for columna in range(n):
-                if columna == fila:
-                    mini_matriz.append(1.0)
-                else:
-                    mini_matriz.append(0.0)
-            matriz.append(mini_matriz)
-        return matriz
-    except ValueError as e:
-        print(f"Error!! {e}")
+    if n % 1 != 0:
+        raise ValueError("Ingrese un número entero")
+    matriz = []
+    for fila in range(n):
+        mini_matriz = []
+        for columna in range(n):
+            if columna == fila:
+                mini_matriz.append(1.0)
+            else:
+                mini_matriz.append(0.0)
+        matriz.append(mini_matriz)
+    return matriz
+
 
     """Crea una matriz identidad cuadrada.
 
@@ -157,15 +159,13 @@ def shape(A: Matriz) -> tuple[int, int]:
 
     Pista: len(A) da filas, len(A[0]) da columnas
     """
-    try:
-        verificacion = isinstance(A, list)
-        if not verificacion:
-            raise ValueError("No se ingresó una matriz")
-        filas = len(A)
-        columnas = len(A[0])
-        return filas, columnas
-    except ValueError as e:
-        print(f"Error {e}")
+    verificacion = isinstance(A, list)
+    if not verificacion:
+        raise ValueError("No se ingresó una matriz")
+    filas = len(A)
+    columnas = len(A[0])
+    return filas, columnas
+
 
 
 def transpose(A: Matriz) -> Matriz:
@@ -187,20 +187,18 @@ def transpose(A: Matriz) -> Matriz:
 
     Pista: Usa zip(*A) o listas por comprensión
     """
-    try:
-        verificacion = isinstance(A, list)
-        if not verificacion:
-            raise ValueError("No se ingresó una matriz")
-        filas = len(A)
-        columnas = len(A[0])
-        transpuesta = [[0 for _ in range(filas)] for _ in range(columnas)]
+    verificacion = isinstance(A, list)
+    if not verificacion:
+        raise ValueError("No se ingresó una matriz")
+    filas = len(A)
+    columnas = len(A[0])
+    transpuesta = [[0 for _ in range(filas)] for _ in range(columnas)]
 
-        for fila in range(filas):
-            for columna in range(columnas):
-                transpuesta[columna][fila] = A[fila][columna]
-        return transpuesta
-    except ValueError as e:
-        print(f"Error {e}")
+    for fila in range(filas):
+        for columna in range(columnas):
+            transpuesta[columna][fila] = A[fila][columna]
+    return transpuesta
+
 
 
 # -------------------------------------------------------------------
