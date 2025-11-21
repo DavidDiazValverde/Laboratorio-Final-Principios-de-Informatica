@@ -167,9 +167,13 @@ def shape(A: Matriz) -> tuple[int, int]:
 
     Pista: len(A) da filas, len(A[0]) da columnas
     """
+    #verificamos que A sea una matriz y no otra cosa
     verificacion = isinstance(A, list)
+    #tiramos un ValueError si no es matriz o una lista cuanto menos, ya que al final de cuentas sin numpy una matriz puede ser 
+    #list[] o list[list]
     if not verificacion:
         raise ValueError("No se ingresó una matriz")
+    #medimos la cantidad de filas y columnas
     filas = len(A)
     columnas = len(A[0])
     return filas, columnas
