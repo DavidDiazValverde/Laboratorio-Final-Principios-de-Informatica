@@ -30,19 +30,25 @@ Matriz = list[list[float]]
 
 
 def zeros(shape: tuple[int, int]) -> Matriz:
-    try:
-        filas, columnas = shape
-        if (filas % 1 != 0) or (columnas % 1 != 0):
-            raise ValueError("Los valores ingresados no son números enteros")
-        matriz = []
-        for fila in range(filas):
-            mini_matriz = []
-            for columna in range(columnas):
-                mini_matriz.append(0.0)
-            matriz.append(mini_matriz)
-        return matriz
-    except ValueError as e:
-        print(f"!Error {e}")
+    #desempaquetamos la variable shape para tener el # de filas y columnas
+    filas, columnas = shape
+    #creamos un condicional que se asegura que los valores ingresados sean enteros
+    if (filas % 1 != 0) or (columnas % 1 != 0):
+        raise ValueError("Los valores ingresados no son números enteros")
+
+    #creamos una matriz vacía que será donde guardemos la matriz que estamos creando
+    matriz = []
+    #usamos un loop for en el rango de filas y creamos una variable que guardará cada fila de la matriz, llamada mini_matriz
+    for fila in range(filas):
+        mini_matriz = []
+        #usamos un loop for dentro del otro para poder agregar la cantidad de 0 necesaria para cada fila
+        for columna in range(columnas):
+            mini_matriz.append(0.0)
+        #esa cantidad de 0 que se guardó en mini_matriz ahora se agrega como fila de la matriz que vamos a devolver
+        matriz.append(mini_matriz)
+        #retornamos la matriz
+    return matriz
+
     """Crea una matriz rellena de ceros.
 
     Equivalente en NumPy: np.zeros(shape)
@@ -62,20 +68,18 @@ def zeros(shape: tuple[int, int]) -> Matriz:
 
 
 def ones(shape: tuple[int, int]) -> Matriz:
-    try:
-        filas, columnas = shape
-        if (filas % 1 != 0) or (columnas % 1 != 0):
-            raise ValueError("Los valores ingresados no son números enteros")
-        matriz = []
-        for fila in range(filas):
-            mini_matriz = []
-            for columna in range(columnas):
-                mini_matriz.append(1.0)
-            matriz.append(mini_matriz)
-        return matriz
-    except ValueError as e:
-        print(f"!Error {e}")
 
+    filas, columnas = shape
+    if (filas % 1 != 0) or (columnas % 1 != 0):
+        raise ValueError("Los valores ingresados no son números enteros")
+    matriz = []
+    for fila in range(filas):
+        mini_matriz = []
+        for columna in range(columnas):
+            mini_matriz.append(1.0)
+        matriz.append(mini_matriz)
+    return matriz
+  
     """Crea una matriz rellena de unos.
 
     Equivalente en NumPy: np.ones(shape)
