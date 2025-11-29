@@ -30,6 +30,23 @@ Matriz = list[list[float]]
 
 
 def zeros(shape: tuple[int, int]) -> Matriz:
+
+    """Crea una matriz rellena de ceros.
+
+    Equivalente en NumPy: np.zeros(shape)
+
+    Args:
+        shape: Tupla (filas, columnas) que define las dimensiones.
+
+    Returns:
+        Matriz: Una matriz de shape con valores 0.0.
+
+    Ejemplo:
+        >>> zeros((2, 3))
+        [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
+
+    Pista: Usa listas por comprensión anidadas
+    """
     #desempaquetamos la variable shape para tener el # de filas y columnas
     filas, columnas = shape
     #creamos un condicional que se asegura que los valores ingresados sean enteros
@@ -49,41 +66,10 @@ def zeros(shape: tuple[int, int]) -> Matriz:
         #retornamos la matriz
     return matriz
 
-    """Crea una matriz rellena de ceros.
-
-    Equivalente en NumPy: np.zeros(shape)
-
-    Args:
-        shape: Tupla (filas, columnas) que define las dimensiones.
-
-    Returns:
-        Matriz: Una matriz de shape con valores 0.0.
-
-    Ejemplo:
-        >>> zeros((2, 3))
-        [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
-
-    Pista: Usa listas por comprensión anidadas
-    """
 
 
 def ones(shape: tuple[int, int]) -> Matriz:
-    # al igual que en la funcion ceros desempaquetamos shape en filas y columnas
-    filas, columnas = shape
-    #nos aseguramos que cada variable tenga los datos que dice que nos proporciona
-    if (filas % 1 != 0) or (columnas % 1 != 0):
-        raise ValueError("Los valores ingresados no son números enteros")
-    #creamos la variable matriz que guardará nuestra matriz de unos
-    matriz = []
-    #usamos el mismo ciclo utilizado en zeros, pero esta vez para unos
-    for fila in range(filas):
-        mini_matriz = []
-        for columna in range(columnas):
-            mini_matriz.append(1.0)
-        matriz.append(mini_matriz)
-    #retornamos la matriz
-    return matriz
-  
+
     """Crea una matriz rellena de unos.
 
     Equivalente en NumPy: np.ones(shape)
@@ -100,9 +86,42 @@ def ones(shape: tuple[int, int]) -> Matriz:
 
     Pista: Similar a zeros() pero con 1.0
     """
+    # al igual que en la funcion ceros desempaquetamos shape en filas y columnas
+    filas, columnas = shape
+    #nos aseguramos que cada variable tenga los datos que dice que nos proporciona
+    if (filas % 1 != 0) or (columnas % 1 != 0):
+        raise ValueError("Los valores ingresados no son números enteros")
+    #creamos la variable matriz que guardará nuestra matriz de unos
+    matriz = []
+    #usamos el mismo ciclo utilizado en zeros, pero esta vez para unos
+    for fila in range(filas):
+        mini_matriz = []
+        for columna in range(columnas):
+            mini_matriz.append(1.0)
+        matriz.append(mini_matriz)
+    #retornamos la matriz
+    return matriz
 
 
 def identity(n: int) -> Matriz:
+    """Crea una matriz identidad cuadrada.
+
+    Equivalente en NumPy: np.identity(n)
+
+    Args:
+        n: El tamaño (número de filas y columnas) de la matriz.
+
+    Returns:
+        Matriz: Una matriz identidad de n x n.
+
+    Ejemplo:
+        >>> identity(3)
+        [[1.0, 0.0, 0.0],
+         [0.0, 1.0, 0.0],
+         [0.0, 0.0, 1.0]]
+
+    Pista: La diagonal tiene 1.0 cuando fila == columna
+    """
     #nos aseguramos que n sea un entero y si no retornamos un ValueError
     if n % 1 != 0:
         raise ValueError("Ingrese un número entero")
@@ -123,27 +142,6 @@ def identity(n: int) -> Matriz:
         matriz.append(mini_matriz)
         #retornamos esa matriz
     return matriz
-
-
-    """Crea una matriz identidad cuadrada.
-
-    Equivalente en NumPy: np.identity(n)
-
-    Args:
-        n: El tamaño (número de filas y columnas) de la matriz.
-
-    Returns:
-        Matriz: Una matriz identidad de n x n.
-
-    Ejemplo:
-        >>> identity(3)
-        [[1.0, 0.0, 0.0],
-         [0.0, 1.0, 0.0],
-         [0.0, 0.0, 1.0]]
-
-    Pista: La diagonal tiene 1.0 cuando fila == columna
-    """
-
 
 # -------------------------------------------------------------------
 # Sección 2: Información de Arrays (⭐ Básico)
@@ -199,13 +197,16 @@ def transpose(A: Matriz) -> Matriz:
 
     Pista: Usa zip(*A) o listas por comprensión
     """
+    #verificamos que A sea una matriz, en este caso lista
     verificacion = isinstance(A, list)
+    #si no lo es implementamos un ValueError que el usuario debería resolver, ya que nosotros solo nos encargamos de la parte matemática
     if not verificacion:
         raise ValueError("No se ingresó una matriz")
-    filas = len(A)
-    columnas = len(A[0])
-    transpuesta = [[0 for _ in range(filas)] for _ in range(columnas)]
-
+    #usamos la anteriormente implementada shape para que nos dé las filas y columnas de A
+    filas,columnas = shape(A)
+    #creamos una matriz transpuesta con 0 que luego cambiaremos, usamos la funcion zeros
+    transpuesta = zeros((filas,columnas))
+    #la transponemos usando dos ciclos for, donde decimos que la nueva fila-columna es la contraria a la de la matriz original
     for fila in range(filas):
         for columna in range(columnas):
             transpuesta[columna][fila] = A[fila][columna]
