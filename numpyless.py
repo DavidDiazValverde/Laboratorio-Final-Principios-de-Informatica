@@ -240,17 +240,23 @@ def dot(v: Vector, w: Vector) -> float:
 
     Pista: Usa sum() y zip()
     """
-    
+    #verificamos que ambos sean vectores y si no generamos un TypeError
     verificacion_v = isinstance(v, list)
     verificacion_w = isinstance(w, list)
     if not verificacion_v or not verificacion_w:
         raise TypeError("los datos entregados no son vectores")
+    #creamos la variable resultado y le guardamos el 0 puesto que todavía no hemos hecho nada
 
     resultado = 0
+    #comparamos que ambos vectoes tengan la misma longitud ya que si no esto no se puede hacer
     if len(v) != len(w):
         raise ValueError("los vectores no tienen la misma longitud")
+    
+    #calculamos el dot
     for i in range(len(v)):
         resultado += v[i] * w[i]
+
+    #devolvemos el resultado
     return resultado
     
 
@@ -276,13 +282,16 @@ def add(v: Vector, w: Vector) -> Vector:
 
     Pista: Usa listas por comprensión con zip()
     """
-
+    #verificamos que tengan la misma longitud
     if len(v) != len(w):
          raise ValueError("Los vectores deben tener la misma logitud")
+    #creamos variable resultado que será un vector
     resultado = []
+    #sumamos
     for i in range(len(v)):
         resultado.append(v[i] + w[i])
 
+    #devolvemos resultado
     return resultado
         
 
@@ -305,16 +314,19 @@ def multiply(c: float, v: Vector) -> Vector:
 
     Pista: Multiplica c por cada elemento
     """
-
+    #verificamos que sea un vector
     verificacion_v = isinstance(v,list)
     if not verificacion_v:
          raise TypeError
     
+    #creamos el vector resultante como una lista
     vector_resultante = []
 
+    #usamos ciclo for para multiplicar por c a todo el vector
     for valor in v:
         resultado = c*valor
         vector_resultante.append(resultado)
+    #retornamos valor
     return vector_resultante
         
         
@@ -339,10 +351,14 @@ def norm(v: Vector) -> float:
 
     Pista: Usa dot(v, v) y luego sqrt() del módulo math
     """
+    #verificamos, a este punto me hubiera venido mejor hacer una función que hiciera esto
     verificar_v = isinstance(v,list)
     if not verificar_v:
         raise TypeError
+    
+    #hacemos el producto entre el mismo vector que sería lo mismo que hacer el cuadrado
     resultado = dot(v,v)
+    #elevamos entre un medio o se puede usar math, como estamos solo con python prefería ver que tanto dura con esto
     return (resultado)**(1/2)
 
 
@@ -372,14 +388,21 @@ def add_matrices(A: Matriz, B: Matriz) -> Matriz:
 
     Pista: Suma elemento a elemento, fila por fila
     """
+    #verificamos que ambos sean matrices
     verificacion_A = isinstance(A,list)
     verificacion_B = isinstance(B,list)
     if not verificacion_A or not verificacion_B:
         raise TypeError
+    
+    #sacamos sus formas
     fila_A, columna_A = shape(A)
     fila_B,columna_B = shape(B)
+
+    #verificamos que ambas filas y columnas sean iguales
     verificacion_filas = (fila_A == fila_B)
     verificacion_columnas = (columna_A == columna_B)
+
+    #si no da value error
     if not verificacion_filas or not verificacion_columnas:
         raise ValueError
     
@@ -389,6 +412,8 @@ def add_matrices(A: Matriz, B: Matriz) -> Matriz:
     for i in range(fila_A):
         for j in range(columna_A):
             resultado[i][j]= A[i][j] + B[i][j]
+    
+    #devolvemos el resultado
     return resultado
 
 
@@ -411,18 +436,24 @@ def multiply_matrix(c: float, A: Matriz) -> Matriz:
 
     Pista: Similar a multiply() pero para cada fila
     """
+    #verificamos
     verificacion_A = isinstance(A,list)
     verificacion_c = isinstance(c,float) or isinstance(c,int)
     if not verificacion_A or not verificacion_c:
         raise TypeError
+    
+    #obtenemos la forma de la matriz A
     fila,columna = shape(A)
 
+    #creamos una matriz llena de 0
     resultado = [[0 for _ in range(fila)] for _ in range(columna)]
 
+    #reemplazamos esos 0 por los valores que deben ser a traves de un ciclo for
     for i in range(fila):
         for j in range (columna):
             multiplicacion = c * A[i][j]
             resultado[i][j]= multiplicacion
+    #devolvemos el valor
     return resultado
 
 
@@ -457,23 +488,31 @@ def matmul(A: Matriz, B: Matriz | Vector) -> Matriz | Vector:
     Pista: Para matrices, cada elemento resultado[i][j] es el
            producto punto de la fila i de A con la columna j de B
     """
+    #verificamos
     verificacion_A = isinstance(A,list)
     verificacion_B = isinstance(B,list)
     if not verificacion_A or not verificacion_B:
         raise TypeError
     
+    #obtenemos la forma de A
+    
     filas_A,columnas_A= shape(A)
 
+    #nos aseguramos que B sea matriz o vector, si es vector devolvemos el dot para cada fila de A, si es matriz continuamos después
     if all(isinstance(x, (int, float)) for x in B):
         if len(B) != columnas_A:
             raise ValueError
         return [dot(fila,B)for fila in A]
     
+    #si es matriz sacamos la forma de B, ya que si lo hubieramos hecho antes nos hubiera dado error
     else:
         filas_B,columnas_B = shape(B)
+        #si no son iguales generamos Value Error
         if filas_B != columnas_A:
             raise ValueError
+        #trasponemos B ya que es más fácil para calcular el matmul
         B_T = transpose(B)
+        #retornamos el dot entre la transpuesta y A, ya que eso nos ayuda a no tener que hacer tantos ciclos
         return [[float(dot(fila_A, columna_B)) for columna_B in B_T] for fila_A in A]
 
 
@@ -517,36 +556,48 @@ def det(A: Matriz) -> float:
     - Caso 2×2: usa la fórmula directa
     - Caso 3×3+: expansión por primera fila (recursivo)
     """
-    
+    #verificamos
     verificacion_A = isinstance(A,list)
     if not verificacion_A:
         raise TypeError
     
+    #vemos si A es solo una 1x1, si es así la devolvemos a ella misma
     if isinstance(A[0],(int,float)):
+        #es importante ver que sea cuadrada ya que lo que hace lo de arriba es solo ver si es un vector, eso nos quita algunos errores
         verificacion_cuadrada = len(A)
         if verificacion_cuadrada ==1:
             return A[0]
         else:
             raise ValueError ("La matriz no es cuadrada")
     
+    #para los demás casos sacamos la forma de A
     else:
         fila, columna = shape(A)
 
+        #si A no es cuadrada mandamos un ValueError
         if fila != columna:
             raise ValueError ("La matriz no es cuadrada")
+        #aquí ponemos cada caso que puede pasar con A
         else:
+            #si por si acaso 1x1 no cayó dentro del caso anterior aquí igual lo devolvemos
             if fila == 1:
                 return A
+            #si es 2x2 usamos la formula de determinantes 2x2 de una
             elif fila == 2:
                 determinante = A[0][0]*A[1][1]-A[0][1]*A[1][0]
                 return determinante
+            
+            #para casos 3x3 o mayores se prefirió ir directo a la concatenación, en vez de hacer dos casos separados de 3x3 y de 4x4 o más
             else:
                 determinante = 0
                 for j in range(fila):
-                # Submatriz eliminando fila 0 y columna j
+                # Creamos una submatriz que  elimina fila 0 y columna j
                     submatriz = [fila[:j] + fila[j+1:] for fila in A[1:]]
+                    #esto es solo para el signo que debe llevar al frente de la fórmula
                     signo = (-1) ** j
+                    #aquí hacemos la concatenación donde mangamos a la submatriz a volver a pasar por aquí, así hasta que ya no se puedan hacer más submatrices
                     determinante += signo * A[0][j] * det(submatriz)
+                #devolvemos el determinante resuelto
                 return determinante
 
     
