@@ -143,6 +143,7 @@ def identity(n: int) -> Matriz:
         #retornamos esa matriz
     return matriz
 
+
 # -------------------------------------------------------------------
 # Sección 2: Información de Arrays (⭐ Básico)
 # -------------------------------------------------------------------
@@ -197,9 +198,7 @@ def transpose(A: Matriz) -> Matriz:
 
     Pista: Usa zip(*A) o listas por comprensión
     """
-    #verificamos que A sea una matriz, en este caso lista
     verificacion = isinstance(A, list)
-    #si no lo es implementamos un ValueError que el usuario debería resolver, ya que nosotros solo nos encargamos de la parte
     if not verificacion:
         raise ValueError("No se ingresó una matriz")
     filas = len(A)
