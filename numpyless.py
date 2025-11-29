@@ -199,14 +199,13 @@ def transpose(A: Matriz) -> Matriz:
     """
     #verificamos que A sea una matriz, en este caso lista
     verificacion = isinstance(A, list)
-    #si no lo es implementamos un ValueError que el usuario debería resolver, ya que nosotros solo nos encargamos de la parte matemática
+    #si no lo es implementamos un ValueError que el usuario debería resolver, ya que nosotros solo nos encargamos de la parte
     if not verificacion:
         raise ValueError("No se ingresó una matriz")
-    #usamos la anteriormente implementada shape para que nos dé las filas y columnas de A
-    filas,columnas = shape(A)
-    #creamos una matriz transpuesta con 0 que luego cambiaremos, usamos la funcion zeros
-    transpuesta = zeros((filas,columnas))
-    #la transponemos usando dos ciclos for, donde decimos que la nueva fila-columna es la contraria a la de la matriz original
+    filas = len(A)
+    columnas = len(A[0])
+    transpuesta = [[0 for _ in range(filas)] for _ in range(columnas)]
+
     for fila in range(filas):
         for columna in range(columnas):
             transpuesta[columna][fila] = A[fila][columna]
